@@ -1,8 +1,9 @@
-import { motion } from "framer-motion";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
-import { projects } from "../data/project";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, ExternalLink, Sparkles, Layers, Cpu, Layout } from "lucide-react";
+import { projects, type Project } from "../data/project";
 
-function GithubIcon({ size = 14 }: { size?: number }) {
+function GithubIcon({ size = 15 }: { size?: number }) {
   return (
     <svg
       width={size}
@@ -20,7 +21,74 @@ function GithubIcon({ size = 14 }: { size?: number }) {
   );
 }
 
+// Visual accent colors for each project to give them distinct identity
+const projectAccents: Record<string, { text: string; border: string }> = {
+  "01": {
+    text: "text-emerald-500 dark:text-emerald-400",
+    border: "border-emerald-500/30",
+  },
+  "02": {
+    text: "text-amber-500 dark:text-amber-400",
+    border: "border-amber-500/30",
+  },
+  "03": {
+    text: "text-blue-500 dark:text-blue-400",
+    border: "border-blue-500/30",
+  },
+  "04": {
+    text: "text-orange-500 dark:text-orange-400",
+    border: "border-orange-500/30",
+  },
+  "05": {
+    text: "text-cyan-500 dark:text-cyan-400",
+    border: "border-cyan-500/30",
+  },
+  "06": {
+    text: "text-rose-500 dark:text-rose-400",
+    border: "border-rose-500/30",
+  },
+  "07": {
+    text: "text-sky-500 dark:text-sky-400",
+    border: "border-sky-500/30",
+  },
+};
+
+const filterTabs = [
+  { id: "all", label: "All Projects", icon: Layers },
+  { id: "backend", label: "Backend & Fullstack", icon: Cpu },
+  { id: "ai", label: "AI & QA", icon: Sparkles },
+  { id: "frontend", label: "Frontend", icon: Layout },
+] as const;
+
+type FilterId = (typeof filterTabs)[number]["id"];
+
 export default function Projects() {
+  const [activeFilter, setActiveFilter] = useState<FilterId>("all");
+
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === "all") return projects;
+    if (activeFilter === "backend") {
+      return projects.filter((p) =>
+        p.category.toUpperCase().includes("BACKEND") ||
+        p.category.toUpperCase().includes("FULLSTACK") ||
+        p.category.toUpperCase().includes("LOGISTICS")
+      );
+    }
+    if (activeFilter === "ai") {
+      return projects.filter((p) =>
+        p.category.toUpperCase().includes("AI") ||
+        p.category.toUpperCase().includes("QA")
+      );
+    }
+    if (activeFilter === "frontend") {
+      return projects.filter((p) =>
+        p.category.toUpperCase().includes("FRONTEND") ||
+        p.category.toUpperCase().includes("ROADMAPS")
+      );
+    }
+    return projects;
+  }, [activeFilter]);
+
   return (
     <section
       id="projects"
@@ -28,33 +96,70 @@ export default function Projects() {
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
 
-        {/* Header */}
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        {/* Section Header */}
+        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div>
-            <p className="text-xs tracking-[0.3em] text-blue-600 dark:text-blue-400">
-              02 / SELECTED WORK
-            </p>
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+              <p className="text-xs font-semibold tracking-[0.3em] text-blue-600 dark:text-blue-400">
+                02 / SELECTED WORK
+              </p>
+            </div>
 
-            <h2 className="mt-5 text-5xl font-bold tracking-[-0.04em] text-slate-900 md:text-7xl dark:text-[#f0f6fc]">
-              Things I've built.
+            <h2 className="mt-4 text-4xl font-black tracking-tight text-slate-900 md:text-6xl lg:text-7xl dark:text-[#f0f6fc]">
+              Featured <span className="text-blue-600 dark:text-blue-400">Creations.</span>
             </h2>
           </div>
 
-          <p className="max-w-sm text-sm leading-7 text-slate-600 dark:text-[#8b949e]">
-            A collection of projects where engineering,
-            automation, quality, and AI come together.
+          <p className="max-w-md text-sm leading-7 text-slate-600 dark:text-[#8b949e]">
+            A showcase of production systems, distributed backends, AI tools, and
+            polished user interfaces engineered for speed and reliability.
           </p>
         </div>
 
-        {/* Projects */}
-        <div className="mt-20 space-y-6">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.number}
-              project={project}
-              index={index}
-            />
-          ))}
+        {/* Interactive Filter Pills */}
+        <div className="mt-12 flex flex-wrap gap-2.5 border-b border-slate-200/80 pb-6 dark:border-[#30363d]">
+          {filterTabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeFilter === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveFilter(tab.id)}
+                className={`relative flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all duration-300 ${
+                  isActive
+                    ? "text-white"
+                    : "text-slate-600 hover:text-slate-900 dark:text-[#8b949e] dark:hover:text-[#f0f6fc] hover:bg-slate-200/50 dark:hover:bg-[#161b22]"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeFilterPill"
+                    className="absolute inset-0 rounded-full bg-blue-600 shadow-md shadow-blue-500/25"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-1.5">
+                  <Icon size={13} />
+                  {tab.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Projects Showcase with Animated Filter Transitions */}
+        <div className="mt-16 space-y-12">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <ProjectShowcaseCard
+                key={project.number}
+                project={project}
+                index={index}
+                isReversed={index % 2 === 1}
+              />
+            ))}
+          </AnimatePresence>
         </div>
 
       </div>
@@ -62,68 +167,86 @@ export default function Projects() {
   );
 }
 
-interface ProjectCardProps {
-  project: (typeof projects)[number];
+interface ProjectShowcaseCardProps {
+  project: Project;
   index: number;
+  isReversed: boolean;
 }
 
-function ProjectCard({ project, index }: ProjectCardProps) {
+function ProjectShowcaseCard({ project, index, isReversed }: ProjectShowcaseCardProps) {
+  const accent = projectAccents[project.number] || {
+    text: "text-blue-500 dark:text-blue-400",
+    border: "border-blue-500/30",
+  };
+
+  const primaryLink =
+    project.demo && project.demo !== "#"
+      ? project.demo
+      : project.github && project.github !== "#"
+      ? project.github
+      : undefined;
+
   return (
     <motion.article
-      initial={{
-        opacity: 0,
-        y: 40,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      viewport={{
-        once: true,
-        amount: 0.2,
-      }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.1,
-      }}
-      className="group overflow-hidden rounded-2xl border border-slate-300/80 bg-[#f8fafc] shadow-sm transition duration-500 hover:border-blue-500/40 hover:shadow-md dark:border-[#30363d] dark:bg-[#161b22] dark:hover:border-blue-500/30"
+      layout
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      className="group relative overflow-hidden rounded-3xl border border-slate-300/80 bg-[#f8fafc] p-6 shadow-sm transition-all duration-500 hover:border-slate-400/80 hover:shadow-2xl sm:p-8 lg:p-10 dark:border-[#30363d] dark:bg-[#161b22] dark:hover:border-[#484f58]"
     >
-      <div className="grid lg:grid-cols-[80px_1fr_1fr]">
-
-        {/* Number */}
-        <div className="hidden border-r border-slate-300/80 p-6 transition-colors duration-300 dark:border-[#30363d] lg:block">
-          <span className="font-mono text-xs text-blue-600 dark:text-blue-400">
-            {project.number}
-          </span>
-        </div>
-
-        {/* Project information */}
-        <div className="flex flex-col justify-between p-7 md:p-10">
+      <div
+        className={`grid items-center gap-8 lg:grid-cols-12 lg:gap-12 ${
+          isReversed ? "lg:[&>*:first-child]:order-2" : ""
+        }`}
+      >
+        {/* Project Info Column (5 cols) */}
+        <div className="flex flex-col justify-between lg:col-span-5">
           <div>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="rounded-full border border-blue-600/20 bg-blue-600/10 px-3 py-1 text-[10px] tracking-widest text-blue-700 dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-400">
-                {project.category}
+            {/* Number + Category Badge */}
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-xs font-bold tracking-wider text-slate-400 dark:text-[#6e7681]">
+                PROJECT // {project.number}
               </span>
-
-              <span className="font-mono text-xs text-slate-400 lg:hidden dark:text-[#6e7681]">
-                {project.number}
+              <span className="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-600" />
+              <span
+                className={`rounded-full border px-3 py-0.5 text-[10px] font-bold tracking-widest uppercase bg-slate-200/50 dark:bg-slate-900/60 ${accent.border} ${accent.text}`}
+              >
+                {project.category}
               </span>
             </div>
 
-            <h3 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl dark:text-[#f0f6fc]">
-              {project.title}
+            {/* Title with sleek hover line */}
+            <h3 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 md:text-4xl dark:text-[#f0f6fc]">
+              {primaryLink ? (
+                <a
+                  href={primaryLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
+                >
+                  {project.title}
+                  <ArrowUpRight
+                    size={22}
+                    className="opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 text-blue-500"
+                  />
+                </a>
+              ) : (
+                project.title
+              )}
             </h3>
 
-            <p className="mt-5 max-w-lg text-sm leading-7 text-slate-600 dark:text-[#8b949e]">
+            {/* Description */}
+            <p className="mt-4 text-sm leading-relaxed text-slate-600 md:text-base md:leading-7 dark:text-[#8b949e]">
               {project.description}
             </p>
 
-            {/* Technologies */}
-            <div className="mt-7 flex flex-wrap gap-2">
+            {/* Tech Tags */}
+            <div className="mt-6 flex flex-wrap gap-2">
               {project.technologies.map((technology) => (
                 <span
                   key={technology}
-                  className="rounded-full border border-slate-300/80 bg-slate-200/50 px-3 py-1.5 text-[10px] text-slate-700 transition group-hover:border-slate-400 dark:border-[#30363d] dark:bg-[#21262d] dark:text-[#8b949e] dark:group-hover:border-slate-600 dark:group-hover:text-[#c9d1d9]"
+                  className="rounded-lg border border-slate-300/80 bg-slate-200/60 px-3 py-1 font-mono text-[11px] font-medium text-slate-700 transition hover:border-slate-400 dark:border-[#30363d] dark:bg-[#0d1117] dark:text-[#8b949e] dark:hover:border-slate-600 dark:hover:text-[#c9d1d9]"
                 >
                   {technology}
                 </span>
@@ -131,65 +254,86 @@ function ProjectCard({ project, index }: ProjectCardProps) {
             </div>
           </div>
 
-          {/* Links */}
-          <div className="mt-10 flex gap-3">
-            {project.github && project.github !== "#" && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-lg border border-slate-300 bg-[#f8fafc] px-4 py-2.5 text-xs font-medium text-slate-800 transition hover:border-slate-400 hover:bg-slate-200/50 dark:border-[#30363d] dark:bg-[#21262d] dark:text-[#e6edf3] dark:hover:border-slate-600"
-              >
-                <GithubIcon size={14} />
-                GitHub
-              </a>
-            )}
-
+          {/* Action Buttons */}
+          <div className="mt-8 flex flex-wrap items-center gap-3 pt-2">
             {project.demo && project.demo !== "#" && (
               <a
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-xs font-medium text-[#f8fafc] transition hover:bg-blue-500 dark:bg-blue-600 dark:hover:bg-blue-500"
+                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-500/20 transition-all hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/30 active:scale-95"
               >
-                Live Demo
-                <ExternalLink size={14} />
+                <span>Live Demo</span>
+                <ExternalLink size={13} />
               </a>
+            )}
+
+            {project.github && project.github !== "#" && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-xs font-semibold text-slate-800 shadow-sm transition-all hover:border-slate-400 hover:bg-slate-100 active:scale-95 dark:border-[#30363d] dark:bg-[#21262d] dark:text-[#e6edf3] dark:hover:border-slate-500 dark:hover:bg-[#30363d]"
+              >
+                <GithubIcon size={14} />
+                <span>Source Code</span>
+              </a>
+            )}
+
+            {(!project.demo || project.demo === "#") && (!project.github || project.github === "#") && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-300/80 bg-slate-200/50 px-3 py-1 text-xs text-slate-500 dark:border-[#30363d] dark:bg-[#0d1117] dark:text-[#6e7681]">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                In Production
+              </span>
             )}
           </div>
         </div>
 
-        {/* Project preview */}
-        <div className="relative min-h-[300px] overflow-hidden border-t border-slate-300/80 bg-slate-200/60 p-4 transition-colors duration-300 dark:border-[#30363d] dark:bg-[#0d1117] lg:border-l lg:border-t-0 flex items-center justify-center">
+        {/* Screenshot / Mockup Column (7 cols) */}
+        <div className="lg:col-span-7">
+          {/* Window Container */}
+          <div className="overflow-hidden rounded-2xl border border-slate-300/80 bg-white shadow-lg transition-all duration-500 group-hover:scale-[1.01] group-hover:shadow-2xl dark:border-[#30363d] dark:bg-[#0d1117]">
 
-          {/* Background subtle glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-transparent pointer-events-none" />
+              {/* Mac-style Window Title Bar */}
+              <div className="flex items-center justify-between border-b border-slate-200 bg-slate-100/90 px-3.5 py-2 dark:border-[#30363d] dark:bg-[#161b22]/90">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
+                </div>
+                <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-400 dark:text-[#6e7681]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/80" />
+                  {project.title.toLowerCase().replace(/[^a-z0-9]/g, "")}
+                </div>
+              </div>
 
-          {/* Image */}
-          <img
-            src={project.image}
-            alt={project.title}
-            className="h-full w-full object-cover object-top rounded-lg border border-slate-300/70 opacity-95 transition duration-500 group-hover:scale-105 group-hover:opacity-100 shadow-sm dark:border-[#30363d] dark:shadow-md"
-          />
+              {/* Screenshot Viewport with balanced 16:9 aspect ratio and max-height */}
+              <div className="relative aspect-[16/9] max-h-[290px] w-full overflow-hidden bg-slate-950">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="h-full w-full object-cover object-top transition duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
 
-          {/* Bottom gradient */}
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent pointer-events-none rounded-b-lg" />
+                {/* Interactive Glass Hover Overlay */}
+                {primaryLink && (
+                  <a
+                    href={primaryLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute inset-0 z-10 flex items-center justify-center bg-slate-950/20 backdrop-blur-[2px] opacity-0 transition-all duration-300 group-hover:opacity-100"
+                    aria-label={`Open ${project.title}`}
+                  >
+                    <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/75 px-5 py-2.5 text-xs font-bold text-white shadow-2xl backdrop-blur-md transition-transform duration-200 hover:scale-105">
+                      <span>Explore Project</span>
+                      <ArrowUpRight size={15} />
+                    </span>
+                  </a>
+                )}
+              </div>
 
-          {/* Arrow */}
-          <div className="absolute right-6 top-6 flex h-12 w-12 items-center justify-center rounded-full border border-slate-300/80 bg-[#f8fafc]/90 text-slate-800 shadow-md backdrop-blur transition duration-300 group-hover:rotate-45 group-hover:bg-blue-600 group-hover:text-[#f8fafc] dark:border-[#30363d] dark:bg-[#161b22]/80 dark:text-[#f0f6fc] dark:group-hover:bg-blue-600">
-            <ArrowUpRight size={20} />
-          </div>
-
-          {/* Bottom label */}
-          <div className="absolute bottom-6 left-6">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-slate-300">
-              PROJECT_{project.number}
-            </p>
-            <p className="mt-1 text-sm font-medium text-slate-100">
-              {project.title}
-            </p>
-          </div>
-
+            </div>
         </div>
 
       </div>

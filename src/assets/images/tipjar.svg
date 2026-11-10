@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+    <linearGradient id="amberGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="20" stdDeviation="25" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bg)"/>
+
+  <!-- Subtle ambient glow -->
+  <circle cx="600" cy="300" r="350" fill="#f59e0b" opacity="0.12" filter="blur(60px)"/>
+  <circle cx="950" cy="450" r="280" fill="#3b82f6" opacity="0.08" filter="blur(60px)"/>
+
+  <!-- Grid pattern overlay -->
+  <g stroke="#334155" stroke-width="1" opacity="0.15">
+    <line x1="0" y1="135" x2="1200" y2="135"/>
+    <line x1="0" y1="270" x2="1200" y2="270"/>
+    <line x1="0" y1="405" x2="1200" y2="405"/>
+    <line x1="0" y1="540" x2="1200" y2="540"/>
+    <line x1="240" y1="0" x2="240" y2="675"/>
+    <line x1="480" y1="0" x2="480" y2="675"/>
+    <line x1="720" y1="0" x2="720" y2="675"/>
+    <line x1="960" y1="0" x2="960" y2="675"/>
+  </g>
+
+  <!-- Main Card Mockup -->
+  <g filter="url(#shadow)" transform="translate(150, 85)">
+    <!-- Browser/App Shell -->
+    <rect width="900" height="505" rx="16" fill="url(#cardBg)" stroke="#334155" stroke-width="1.5"/>
+
+    <!-- Window Header -->
+    <rect width="900" height="50" rx="16" fill="#1e293b" opacity="0.6"/>
+    <circle cx="35" cy="25" r="6" fill="#ef4444"/>
+    <circle cx="55" cy="25" r="6" fill="#f59e0b"/>
+    <circle cx="75" cy="25" r="6" fill="#10b981"/>
+    <rect x="250" y="12" width="400" height="26" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="450" y="29" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12" text-anchor="middle">tipjar.app/bonsa</text>
+
+    <!-- Card Content -->
+    <!-- Profile Avatar & Details -->
+    <circle cx="120" cy="140" r="42" fill="#334155" stroke="#f59e0b" stroke-width="3"/>
+    <text x="120" y="152" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="34" font-weight="bold" text-anchor="middle">☕</text>
+
+    <text x="190" y="132" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="24" font-weight="bold">Bonsa Desalegn</text>
+    <text x="190" y="156" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="14">@bonsa · Backend &amp; QA Engineer</text>
+    <rect x="190" y="172" width="110" height="22" rx="11" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-width="1"/>
+    <text x="245" y="187" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">✓ VERIFIED</text>
+
+    <!-- Preset Tipping Amounts -->
+    <text x="100" y="245" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="16" font-weight="600">Select Tip Amount (ETB)</text>
+    <rect x="100" y="265" width="90" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <text x="145" y="295" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">50</text>
+
+    <rect x="205" y="265" width="90" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <text x="250" y="295" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">100</text>
+
+    <rect x="310" y="265" width="90" height="48" rx="8" fill="url(#amberGlow)" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="355" y="295" fill="#ffffff" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">200 ★</text>
+
+    <rect x="415" y="265" width="90" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <text x="460" y="295" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">500</text>
+
+    <!-- Support Button -->
+    <rect x="100" y="340" width="405" height="52" rx="10" fill="url(#amberGlow)"/>
+    <text x="302" y="372" fill="#ffffff" font-family="system-ui, sans-serif" font-size="17" font-weight="bold" text-anchor="middle">Send 200 ETB with Telebirr / CBE</text>
+
+    <!-- Stats Panel Right Side -->
+    <rect x="560" y="100" width="280" height="340" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="590" y="140" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12" font-weight="600" letter-spacing="1">LIVE SUPPORTER WALL</text>
+
+    <rect x="585" y="165" width="230" height="60" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="605" y="190" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="13" font-weight="bold">Anonymous Supporter</text>
+    <text x="605" y="210" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="12">Tipped 200 ETB · "Keep building!"</text>
+
+    <rect x="585" y="240" width="230" height="60" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="605" y="265" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="13" font-weight="bold">Kenenisa T.</text>
+    <text x="605" y="285" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="12">Tipped 500 ETB · "Great work on DAAS!"</text>
+
+    <rect x="585" y="315" width="230" height="60" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="605" y="340" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="13" font-weight="bold">Sara M.</text>
+    <text x="605" y="360" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="12">Tipped 100 ETB</text>
+
+    <!-- Bottom Feature Tags -->
+    <rect x="100" y="420" width="85" height="26" rx="6" fill="#334155" opacity="0.6"/>
+    <text x="142" y="437" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">Next.js 15</text>
+
+    <rect x="195" y="420" width="85" height="26" rx="6" fill="#334155" opacity="0.6"/>
+    <text x="237" y="437" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">Prisma ORM</text>
+
+    <rect x="290" y="420" width="85" height="26" rx="6" fill="#334155" opacity="0.6"/>
+    <text x="332" y="437" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">PostgreSQL</text>
+
+    <rect x="385" y="420" width="85" height="26" rx="6" fill="#334155" opacity="0.6"/>
+    <text x="427" y="437" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">TailwindCSS</text>
+  </g>
+</svg>
