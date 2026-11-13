@@ -50,7 +50,7 @@ export const projects: Project[] = [
       "Tailwind CSS",
     ],
     github: "https://github.com/bonssss/tipjar",
-    demo: "#",
+    demo: "https://tiplyapp.vercel.app/",
   },
 
   {
@@ -85,7 +85,7 @@ export const projects: Project[] = [
       "Context API",
     ],
     github: "https://github.com/bonssss/addis-eats",
-    demo: "#",
+    demo: "https://gazergraze.vercel.app/",
   },
 
   {
@@ -102,7 +102,7 @@ export const projects: Project[] = [
       "Lucide React",
     ],
     github: "https://github.com/bonssss/skillhub",
-    demo: "#",
+    demo: "https://skillhubss.vercel.app/",
   },
 
   {

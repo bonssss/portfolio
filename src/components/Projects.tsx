@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ExternalLink, Sparkles, Layers, Cpu, Layout } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Sparkles, Layers, Cpu, Layout, Globe } from "lucide-react";
 import { projects, type Project } from "../data/project";
 
 function GithubIcon({ size = 15 }: { size?: number }) {
@@ -263,8 +263,9 @@ function ProjectShowcaseCard({ project, index, isReversed }: ProjectShowcaseCard
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-500/20 transition-all hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/30 active:scale-95"
               >
+                <Globe size={13} />
                 <span>Live Demo</span>
-                <ExternalLink size={13} />
+                <ExternalLink size={12} className="opacity-75" />
               </a>
             )}
 
@@ -302,8 +303,8 @@ function ProjectShowcaseCard({ project, index, isReversed }: ProjectShowcaseCard
                   <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
                 </div>
                 <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-400 dark:text-[#6e7681]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/80" />
-                  {project.title.toLowerCase().replace(/[^a-z0-9]/g, "")}
+                  <Globe size={11} className="text-slate-400 dark:text-[#6e7681]" />
+                  <span>{project.title.toLowerCase().replace(/[^a-z0-9]/g, "")}</span>
                 </div>
               </div>
 
