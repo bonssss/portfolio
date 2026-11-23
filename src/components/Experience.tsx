@@ -152,24 +152,25 @@ function ExperienceItem({
       </div>
     </motion.article>
   );
+
 }
 
-function Stat({
-  value,
-  label,
-}: {
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="bg-[#f8fafc] p-7 dark:bg-[#161b22]">
-      <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-[#f0f6fc]">
-        {value}
-      </p>
+// function Stat({
+//   value,
+//   label,
+// }: {
+//   value: string;
+//   label: string;
+// }) {
+//   return (
+//     <div className="bg-[#f8fafc] p-7 dark:bg-[#161b22]">
+//       <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-[#f0f6fc]">
+//         {value}
+//       </p>
 
-      <p className="mt-2 text-xs text-slate-600 dark:text-[#8b949e]">
-        {label}
-      </p>
-    </div>
-  );
-}
+//       <p className="mt-2 text-xs text-slate-600 dark:text-[#8b949e]">
+//         {label}
+//       </p>
+//     </div>
+//   );
+// }
