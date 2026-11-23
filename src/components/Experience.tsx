@@ -48,7 +48,7 @@ export default function Experience() {
         </div>
 
         {/* Bottom stats */}
-        <div className="mt-20 grid gap-px overflow-hidden rounded-xl border border-slate-300/80 bg-slate-300/80 dark:border-[#30363d] dark:bg-[#30363d] sm:grid-cols-3">
+        {/* <div className="mt-20 grid gap-px overflow-hidden rounded-xl border border-slate-300/80 bg-slate-300/80 dark:border-[#30363d] dark:bg-[#30363d] sm:grid-cols-3">
           <Stat
             value="2+"
             label="Years Backend & QA"
@@ -63,7 +63,7 @@ export default function Experience() {
             value="100%"
             label="Commitment to Quality"
           />
-        </div>
+        </div> */}
 
       </div>
     </section>
