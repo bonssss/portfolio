@@ -1,4 +1,5 @@
 import { ThemeProvider } from './context/ThemeContext'
+import { Analytics } from '@vercel/analytics/react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Projects from './components/Projects'
@@ -24,6 +25,7 @@ function App() {
           <Contact />
           <Footer />
         </main>
+        <Analytics />
       </div>
     </ThemeProvider>
   )
